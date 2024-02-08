@@ -1,4 +1,14 @@
 package edu.iu.yanlian.demo.model;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
+
+@JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type")
+@JsonSubTypes({
+        @JsonSubTypes.Type(value = MallardDuck.class, name = "MALLARD"),
+        @JsonSubTypes.Type(value = RedheadDuck.class, name = "REDHEAD"),
+        @JsonSubTypes.Type(value = RubberDuck.class, name = "RUBBER"),
+        @JsonSubTypes.Type(value = DecoyDuck.class, name = "DECOY")
+})
 
 public abstract class Duck {
     FlyBehavior flyBehavior;
@@ -70,3 +80,5 @@ public abstract class Duck {
 
     }
 }
+
+

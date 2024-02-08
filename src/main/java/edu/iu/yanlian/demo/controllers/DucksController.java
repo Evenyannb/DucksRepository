@@ -1,6 +1,6 @@
 package edu.iu.yanlian.demo.controllers;
 import edu.iu.yanlian.demo.model.Duck;
-import edu.iu.yanlian.demo.repository.duckService;
+import edu.iu.yanlian.demo.repository.DucksRepository;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -14,33 +14,32 @@ import java.util.List;
 @RequestMapping("/ducks")
 public class DucksController {
 
-    // Assuming you have a service for handling duck operations
-    private final  duckService;
+    private final DucksRepository duckService;
 
-    public DucksController(DuckService duckService) {
+    public DucksController(DucksRepository duckService) {
         this.duckService = duckService;
     }
 
     @PostMapping
-    public String addDuck(@RequestBody Duck duck) {
-        // Implement logic to add duck to database
-        return "Duck added";
+    public void addDuck(@RequestBody Duck duck) {
+        addDuck(duck);
+
     }
 
     @GetMapping
-    public List<Duck> getAllDucks() {
-        // Implement logic to return all ducks
-        return duckService.findAll();
+    public List<Duck> getAllDucks() throws IOException {
+
+        return duckService.getAllDucks();
     }
 
     @GetMapping("/{id}")
-    public Duck getDuckById(@PathVariable String id) {
-        // Implement logic to return a duck by id
+    public Duck getDuckById(@PathVariable int id) throws IOException {
+
         return duckService.findById(id);
     }
 
     @PostMapping("/{id}/image")
-    public String uploadDuckImage(@PathVariable String id, @RequestParam("image") MultipartFile image) {
+    public String uploadDuckImage(@PathVariable int id, @RequestParam("image") MultipartFile image) {
         try {
             Path path = Paths.get("ducks/images/" + id + ".png");
             Files.write(path, image.getBytes());
@@ -51,13 +50,13 @@ public class DucksController {
     }
 
     @GetMapping("/{id}/image")
-    public byte[] getDuckImage(@PathVariable String id) throws IOException {
+    public byte[] getDuckImage(@PathVariable int id) throws IOException {
         Path path = Paths.get("ducks/images/" + id + ".png");
         return Files.readAllBytes(path);
     }
 
     @PostMapping("/{id}/audio")
-    public String uploadDuckAudio(@PathVariable String id, @RequestParam("audio") MultipartFile audio) {
+    public String uploadDuckAudio(@PathVariable int id, @RequestParam("audio") MultipartFile audio) {
         try {
             Path path = Paths.get("ducks/audio/" + id + ".mp3");
             Files.write(path, audio.getBytes());
@@ -68,14 +67,13 @@ public class DucksController {
     }
 
     @GetMapping("/{id}/audio")
-    public byte[] getDuckAudio(@PathVariable String id) throws IOException {
+    public byte[] getDuckAudio(@PathVariable int id) throws IOException {
         Path path = Paths.get("ducks/audio/" + id + ".mp3");
         return Files.readAllBytes(path);
     }
 
     @GetMapping("/search")
-    public List<Duck> searchDucks(@RequestParam String type) {
-        // Implement logic to search ducks by type
-        return duckService.findByType(type);
+    public List<Duck> searchDucks(@RequestParam String type) throws IOException {
+        return duckService.search(type);
     }
 }

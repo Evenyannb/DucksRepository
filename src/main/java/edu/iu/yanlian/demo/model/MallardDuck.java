@@ -1,10 +1,10 @@
 package edu.iu.yanlian.demo.model;
 
-class MallardDuck extends Duck {
+public class MallardDuck extends Duck {
     public MallardDuck(int id) {
-        quackBehavior = new Quack();
-        flyBehavior = new FlyWithWings();
         super(id, DuckType.MALLARD);
+        quackBehavior = new Squeak();
+        flyBehavior = new FlyNoWay();
     }
 
     public void display() {

@@ -1,9 +1,10 @@
 package edu.iu.yanlian.demo.model;
 
-class RedheadDuck extends Duck {
-    public RedheadDuck() {
-        quackBehavior = new Quack();
-        flyBehavior = new FlyWithWings();
+public class RedheadDuck extends Duck {
+    public RedheadDuck(int id) {
+        super(id, DuckType.REDHEAD);
+        quackBehavior = new Squeak();
+        flyBehavior = new FlyNoWay();
     }
 
     public void display() {

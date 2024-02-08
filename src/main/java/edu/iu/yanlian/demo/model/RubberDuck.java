@@ -1,7 +1,8 @@
 package edu.iu.yanlian.demo.model;
 
-class RubberDuck extends Duck {
-    public RubberDuck() {
+public class RubberDuck extends Duck {
+    public RubberDuck(int id) {
+        super(id, DuckType.RUBBER);
         quackBehavior = new Squeak();
         flyBehavior = new FlyNoWay();
     }
